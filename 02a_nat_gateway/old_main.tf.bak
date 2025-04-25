@@ -1,6 +1,6 @@
 provider "aws" {
   region  = var.region
-  profile = var.aws_profile_name
+#  profile = var.aws_profile_name
 }
 
 # Import the VPC resources
@@ -16,7 +16,7 @@ data "terraform_remote_state" "vpc" {
 resource "aws_eip" "nat" {
   count = length(data.terraform_remote_state.vpc.outputs.public_subnet_cidr_blocks)
 
-  vpc = true
+  #vpc = true
 
   tags = {
     Name = format(
