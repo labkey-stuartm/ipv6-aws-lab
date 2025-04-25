@@ -1,6 +1,6 @@
 provider "aws" {
   region  = var.region
-  profile = var.aws_profile_name
+#  profile = var.aws_profile_name
 }
 
 # Import the VPC resources
@@ -17,7 +17,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
   }
 
   filter {
@@ -37,7 +37,7 @@ resource "aws_security_group" "v6LabSG" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["144.202.87.91/32"]
     ipv6_cidr_blocks = ["::/0"]
   }
 
@@ -109,7 +109,7 @@ resource "aws_network_interface" "eni_v6LabPublicEC2DualStack" {
 
 resource "aws_instance" "v6LabPublicEC2DualStack" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = "t3a.medium"
   key_name      = var.ssh_key_name
 
 
@@ -144,7 +144,7 @@ resource "aws_network_interface" "eni_v6LabPrivateEC2DualStack" {
 
 resource "aws_instance" "v6LabPrivateEC2DualStack" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = "t3a.medium"
   key_name      = var.ssh_key_name
 
 
@@ -182,7 +182,7 @@ resource "aws_network_interface" "eni_v6LabPublicEC2IPv6Only" {
 
 resource "aws_instance" "v6LabPublicEC2IPv6Only" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = "t3a.medium"
   key_name      = var.ssh_key_name
 
 
@@ -219,7 +219,7 @@ resource "aws_network_interface" "eni_v6LabPrivateEC2IPv6Only" {
 
 resource "aws_instance" "v6LabPrivateEC2IPv6Only" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = "t3a.medium"
   key_name      = var.ssh_key_name
 
 
